@@ -1,41 +1,35 @@
-import { StyleSheet, View } from "react-native";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { View, StyleSheet } from "react-native";
+import { COLORS } from "../constants/theme";
 
-import FixturesComponent from "../components/FixturesComponent";
+import HeadingContainer from "../components/HeaderComponent";
 import SportsComponent from "../components/SportsComponent";
-import HeaderComponent from "../components/HeaderComponent";
+import MatchesList from "../components/footballComponents/FootballFixturesComponent";
 
 function FootballHomeScreen() {
-  const [footballData, setFootballData] = useState(null);
+  const [currentOffset, setCurrentOffset] = useState(0);
 
-  useEffect(() => {
-    axios
-      .get("http://192.168.0.106:3000/cricket/todays-matches")
-      .then((response) => {
-        console.log(JSON.stringify(response.data.data, null, 2));
-        setFootballData(response.data.data); // Set the data from the server response
-      })
-
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+  const onDateChange = (newOffset) => {
+    setCurrentOffset(newOffset);
+  };
 
   return (
     <View style={styles.rootContainer}>
-      <HeaderComponent />
+      <HeadingContainer />
       <SportsComponent />
-      {/* <Text> {data} </Text> */}
-      <FixturesComponent data={{ data: footballData, type: "Football" }} />
+      <MatchesList
+        currentOffset={currentOffset}
+        setCurrentOffset={onDateChange}
+      />
     </View>
   );
 }
 
-export default FootballHomeScreen;
-
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    backgroundColor: COLORS.background,
   },
 });
+
+export default FootballHomeScreen;

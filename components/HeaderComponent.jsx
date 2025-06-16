@@ -1,13 +1,22 @@
-import { StyleSheet, View, Text } from "react-native";
-import IconComponent from "../components/PressableComponents/IconComponent";
+// Enhanced HeaderComponent
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
+import { COLORS, FONTS } from "../constants/theme";
 
 function HeaderComponent() {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.HeadingContainer}>
-      <Text style={styles.heading}>Name</Text>
-      <View style={styles.IconContainer}>
-        <IconComponent name="search" packageName="Feather" />
-        <IconComponent name="more-horizontal" packageName="Feather" />
+    <View style={styles.headerContainer}>
+      <Text style={styles.heading}>PulseScore</Text>
+      <View style={styles.iconContainer}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("OptionsScreen")}
+          style={styles.iconButton}
+        >
+          <Feather name="more-horizontal" size={28} color={COLORS.text} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -16,24 +25,36 @@ function HeaderComponent() {
 export default HeaderComponent;
 
 const styles = StyleSheet.create({
-  HeadingContainer: {
+  headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    margin: 10,
-    paddingHorizontal: 10,
+    alignItems: "center",
+    marginHorizontal: 12,
+    marginVertical: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: COLORS.primary,
+    borderRadius: 12,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
-  IconContainer: {
-    flex: 0.5,
+  iconContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginLeft: 20,
+    justifyContent: "flex-end",
     alignItems: "center",
   },
-
+  iconButton: {
+    padding: 8,
+    borderRadius: 8,
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+  },
   heading: {
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: 32,
+    fontSize: FONTS.size.extraLarge,
     fontWeight: "bold",
+    color: COLORS.text,
+    letterSpacing: 0.5,
   },
 });

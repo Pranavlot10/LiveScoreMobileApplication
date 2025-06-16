@@ -1,0 +1,11 @@
+[versions]
+kotlin = "1.9.0"
+agp = "8.1.1"
+gradle = "8.6"
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+android-gradle = { id = "com.android.tools.build:gradle", version.ref = "agp" }
+
+[libraries]
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }

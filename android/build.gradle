@@ -1,0 +1,20 @@
+buildscript {
+    ext {
+        buildToolsVersion = "34.0.0"
+        minSdkVersion = 21
+        compileSdkVersion = 34
+        targetSdkVersion = 34
+        kotlinVersion = "1.9.0" // Required for New Architecture
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.1.1") // Updated for RN 0.76
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+
+        // ✅ ✅ ✅ Add this for Google Services plugin (required for Firebase/Auth)
+        classpath("com.google.gms:google-services:4.3.15")
+    }
+}

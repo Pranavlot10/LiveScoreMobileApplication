@@ -1,0 +1,11 @@
+rootProject.name = 'LiveScoreMobileApplication'
+include ':app'
+includeBuild('../node_modules/@react-native/gradle-plugin/react-native-gradle-plugin')
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            from(files("gradle/libs.versions.toml"))
+        }
+    }
+}

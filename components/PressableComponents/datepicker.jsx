@@ -1,62 +1,78 @@
-import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import ButtonComponent from "./ButtonComponent";
+import { useEffect, useState, useRef, useMemo } from "react";
+import { View, StyleSheet, ScrollView } from "react-native";
+import TabsComponent from "./TabsComponent";
 import ImageButtonComponent from "./imageButtonComponent";
 
-function DatePickerWidget() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+function DatePickerComponent({ currentOffset, setCurrentOffset }) {
   const [showPicker, setShowPicker] = useState(false);
-  const dateOffsets = [-2, -1, 0, 1, 2];
+  const scrollViewRef = useRef(null);
 
-  const onChange = (event, date) => {
-    setShowPicker(false);
-    if (date) setSelectedDate(date);
-    console.log(selectedDate);
+  // Use memoization to avoid recalculating the date offsets unnecessarily
+  const dateOffsets = useMemo(
+    () => Array.from({ length: 11 }, (_, i) => i - 5),
+    []
+  );
+
+  // Calculate the scroll offset dynamically for better adaptability
+  const scrollToCurrentOffset = () => {
+    if (scrollViewRef.current) {
+      const tabWidth = 32; // Adjust this if the tab width changes
+      const scrollOffset = (currentOffset + 5) * tabWidth;
+      requestAnimationFrame(() => {
+        scrollViewRef.current.scrollTo({ x: scrollOffset, animated: true });
+      });
+    }
   };
 
-  const updateDate = (daysOffset) => {
-    const newDate = new Date(selectedDate);
-    newDate.setDate(newDate.getDate() + daysOffset);
-    setSelectedDate(newDate);
-  };
+  // Effect to scroll to the correct position when the current offset changes
+  useEffect(() => {
+    scrollToCurrentOffset();
+  }, [currentOffset]);
 
   return (
     <View style={styles.container}>
-      {dateOffsets.map((offset) => (
-        <ButtonComponent
-          key={offset}
-          style={styles.dateButton}
-          title={(selectedDate.getDate() + offset).toString()}
-          onPress={() => updateDate(offset)}
-        />
-      ))}
+      <ScrollView
+        ref={scrollViewRef}
+        horizontal
+        contentContainerStyle={styles.dateScroll}
+        showsHorizontalScrollIndicator={false}
+        scrollEventThrottle={16}
+      >
+        {dateOffsets.map((offset) => {
+          const date = new Date();
+          date.setDate(date.getDate() + offset);
+          const day = date.getDate().toString();
+
+          return (
+            <TabsComponent
+              key={offset}
+              title={day}
+              tabCount={dateOffsets.length}
+              onPress={() => setCurrentOffset(offset)}
+              selected={currentOffset === offset}
+            />
+          );
+        })}
+      </ScrollView>
       <ImageButtonComponent
         iconSource={require("../../assets/calendar.png")}
         onPress={() => setShowPicker(true)}
       />
-
-      {showPicker && (
-        <DateTimePicker
-          value={selectedDate}
-          mode="date"
-          display="default"
-          onChange={onChange}
-        />
-      )}
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
   },
-
-  dateButton: {
-    maxWidth: 30,
+  dateScroll: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
 
-export default DatePickerWidget;
+export default DatePickerComponent;
