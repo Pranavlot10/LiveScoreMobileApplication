@@ -14,7 +14,7 @@ A React Native mobile app built with Expo that provides live scores for **Footba
 - [React Native](https://reactnative.dev/)
 - [Expo](https://expo.dev/)
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-- (Add any API or data source you're using here)
+- Rapid API
 
 ## 🚀 Installation
 
