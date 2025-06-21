@@ -96,6 +96,12 @@ A **React Native** mobile app built with **Expo** that provides live scores for 
 
 ---
 
+## 🔗 Related Repositories
+
+- 📱 Backend (Node.js): [LiveScoreMobileApplication-Backend](https://github.com/Pranavlot10/LiveScoreMobileApplication-Backend)
+
+---
+
 ## 🚀 Installation
 
 1. **Clone the repository**
