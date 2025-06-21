@@ -43,7 +43,7 @@ A **React Native** mobile app built with **Expo** that provides live scores for 
   &nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;
   &nbsp;&nbsp;&nbsp;
-  <img src="assets/screenshots/newScreen.png" width="250" />
+  <img src="assets/screenshots/newsScreen.png" width="250" />
 </p>
 
 ---
